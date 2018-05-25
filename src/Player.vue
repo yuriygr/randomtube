@@ -131,20 +131,22 @@
 			})
 			// Перехватываем эвенты Window
 			window.addEventListener('keydown', e => {
-				switch(e.keyCode) {
-					case 32: // Пробел
-						this.togglePlay()
-					break;
-					case 37: // Лево
-						this.prev()
-					break;
-					case 39: // Право
-						this.next()
-					break;
-					case 70: // F key
-						this.toggleFullscreen()
-					break;
-				}
+				if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
+          switch(e.keyCode) {
+            case 32: // Пробел
+              this.togglePlay()
+            break;
+            case 37: // Лево
+              this.prev()
+            break;
+            case 39: // Право
+              this.next()
+            break;
+            case 70: // F key
+              this.toggleFullscreen()
+            break;
+          }
+        }
 			})
 		},
 		methods: {
