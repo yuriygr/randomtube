@@ -1,28 +1,25 @@
-import 'es6-promise/auto'
-
 import Vue from 'vue'
 import Meta from 'vue-meta'
-import VueRouter from 'vue-router'
 
-import router from './router'
-
-Vue.use(Meta)
-
-Vue.filter('formatBytes', (bytes, decimals) => {
-	if (bytes == 0) return '0 Bytes'
-	let k = 1024,
-		dm = decimals || 1,
-		sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-		i = Math.floor(Math.log(bytes) / Math.log(k))
-	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
-})
+import App from '@/components/App'
+import filters from '@/filters'
+import router from '@/router'
 
 // some styles
 import 'reset-css/reset.css'
 import 'assets/style.css'
 
+// some metakeys
+Vue.use(Meta)
+
+// register global utility filters
+Object.keys(filters).forEach((key) =>
+	Vue.filter(key, filters[key])
+)
+
+// create application
 const app = new Vue({
 	router,
-	template: '<router-view></router-view>'
+	...App
 })
 app.$mount('#app')

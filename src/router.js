@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-import Player from './Player'
+import Player from '@/components/Player'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
 const routes = [
 	{ path: '/', component: Player, children: [
@@ -16,9 +16,10 @@ const routes = [
 	{ path: '*', redirect: 'player-board' }
 ]
 
-const router = new VueRouter({
+const router = new Router({
 	routes,
 	mode: 'history',
+	pathToRegexOptions: { strict: true },
 	scrollBehavior (to, from, savedPosition) {
 		if (savedPosition)
 			return savedPosition

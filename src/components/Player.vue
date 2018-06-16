@@ -70,6 +70,7 @@
 
 				currentChan: '2ch.hk',
 				currentBoard: '',
+				currentThread: null,
 
 				theme: 'white',
 
@@ -106,14 +107,17 @@
 			// Устанавливаем текущий раздел, тем самым в watch грузим видео и меняем заголовок
 			this.currentBoard = this.$route.params.board || this.defaultBoard
 
+			// Устанавливаем текущий тред. Если нет, то нет
+			this.currentThread = this.$route.params.thread || false
+
 			// Устанавливаем тему
 			this.theme = localStorage.getItem('theme') || 'white'
 
-			// Записываем экземлпяр видео плеера в общий Store
+			// Записываем экземлпяр видео плеера в локальный Store
 			this.$video = this.$refs.video
 			this.$canvas = this.$refs.canvas
 
-			// Перехватываем эвенты $video
+			// Прослушиваем эвенты $video
 			this.$video.addEventListener('click', e => {
 				this.togglePlay()
 			})
@@ -129,21 +133,22 @@
 				this.sources.splice(this.currentIndex, 1)
 				this.next()
 			})
-			// Перехватываем эвенты Window
+
+			// Прослушиваем эвенты Window
 			window.addEventListener('keydown', e => {
 				if (!e.metaKey && !e.ctrlKey && !e.shiftKey) {
 					switch(e.keyCode) {
 						case 32: // Пробел
-						this.togglePlay()
+							this.togglePlay()
 						break;
 						case 37: // Лево
-						this.prev()
+							this.prev()
 						break;
 						case 39: // Право
-						this.next()
+							this.next()
 						break;
 						case 70: // F key
-						this.toggleFullscreen()
+							this.toggleFullscreen()
 						break;
 					}
 				}
@@ -173,29 +178,26 @@
 				if (!document.fullscreenElement && // alternative standard method
 					!document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
 					if (this.$video.requestFullscreen) {
-						this.$video.requestFullscreen();
+						this.$video.requestFullscreen()
 					} else if (this.$video.msRequestFullscreen) {
-						this.$video.msRequestFullscreen();
+						this.$video.msRequestFullscreen()
 					} else if (this.$video.mozRequestFullScreen) {
-						this.$video.mozRequestFullScreen();
+						this.$video.mozRequestFullScreen()
 					} else if (this.$video.webkitRequestFullscreen) {
-						this.$video.webkitRequestFullscreen();
+						this.$video.webkitRequestFullscreen()
 					} else {
-						console.log("Fullscreen API is not supported");
+						console.log("Fullscreen API is not supported")
 					}
-
 				} else {
-
 					if (document.exitFullscreen) {
-						document.exitFullscreen();
+						document.exitFullscreen()
 					} else if (document.msExitFullscreen) {
-						document.msExitFullscreen();
+						document.msExitFullscreen()
 					} else if (document.mozCancelFullScreen) {
-						document.mozCancelFullScreen();
+						document.mozCancelFullScreen()
 					} else if (document.webkitCancelFullScreen) {
-						document.webkitCancelFullScreen();
+						document.webkitCancelFullScreen()
 					}
-
 				}
 			},
 			switchTheme() {
@@ -204,6 +206,7 @@
 
 			/**
 			 * Офигенно важная функция по загрузке видео
+			 * @param {array} params Параметры для запроса
 			 */
 			loadVideos(params) {
 				return instance.get('video.get', { params })
@@ -233,11 +236,11 @@
 				// Calculate the height based on the video's width and the ratio
 					h = parseInt(w / ratio, 10)
 				// Set the canvas width and height to the values just calculated
-				this.$canvas.width = w;
-				this.$canvas.height = h;
+				this.$canvas.width = w
+				this.$canvas.height = h
 
-				context.fillRect(0, 0, w, h);
-				context.drawImage(this.$video, 0, 0, w, h);
+				context.fillRect(0, 0, w, h)
+				context.drawImage(this.$video, 0, 0, w, h)
 
 				console.log(this.$canvas.toBlob())
 			}
@@ -246,7 +249,11 @@
 			// При смене раздела
 			async currentBoard() {
 				// Грузим новые видео
-				await this.loadVideos({ chan: this.currentChan, board: this.currentBoard }).then(_ => {
+				await this.loadVideos({
+					chan: this.currentChan,
+					board: this.currentBoard,
+					thread: this.currentThread
+				}).then(_ => {
 					this.currentVideo = this.sources[this.currentIndex]
 				})
 				// Меняем заголовок
@@ -270,7 +277,12 @@
 				})
 			},
 			async currentPage() {
-				await this.loadVideos({ chan: this.currentChan, board: this.currentBoard, page: this.currentPage })
+				await this.loadVideos({
+					chan: this.currentChan,
+					board: this.currentBoard,
+					thread: this.currentThread,
+					page: this.currentPage
+				})
 			},
 			theme() {
 				document.body.setAttribute('data-theme', this.theme)
