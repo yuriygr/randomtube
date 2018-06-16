@@ -1,6 +1,13 @@
-# webm-tv
+# randomtube
 
-> A WebM TV from 2ch.hk
+> Бесконечно-случайный поток видео-контента с анонимного форума 'Два.ч'. Возможно 18+
+
+
+## История версий
+
+* 1.5.8 - Добавлена поддержка проигрывания конкретного треда. Исправлена ошибка бесконечного пролистывания, если листать некуда.
+
+* 1.5.6 - Мелкие исправления и обновление пакетов. Подготовка к проигрыванию конкретного треда.
 
 ## Build Setup
 
@@ -17,5 +24,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

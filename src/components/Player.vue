@@ -11,15 +11,20 @@
 					<span v-else>Prev</span>
 				</span>
 				<span class="actions__item">
-					<a href="#" @click="next" @click.prevent.stop>Next</a>
+					<a v-if="currentIndex < sources.length - 1" href="#" @click="next" @click.prevent.stop>Next</a>
+					<span v-else>Next</span>
 				</span>
 				<span class="actions__item actions__item--divide">|</span>
 				<span class="actions__item" :class="{ 'actions__item--active': options.loop }">
-					<a href="#" @click="loop" @click.prevent.stop>Loop</a>
+					<a href="#" @click="toggleLoop" @click.prevent.stop>Loop</a>
 				</span>
 				<span class="actions__item">
 					<a v-if="currentVideo.url" :href="currentVideo.url" download>Download</a>
 					<span v-else>Download</span>
+				</span>
+				<span class="actions__item actions__item--divide">|</span>
+				<span class="actions__item">
+					<a href="#" @click="toggleModal" @click.prevent.stop>?</a>
 				</span>
 			</div>
 			<video
@@ -70,7 +75,7 @@
 
 				currentChan: '2ch.hk',
 				currentBoard: '',
-				currentThread: null,
+				currentThread: '',
 
 				theme: 'white',
 
@@ -154,20 +159,42 @@
 				}
 			})
 		},
+		computed: {
+			/**
+			 * Параметры для запроса
+			 */
+			params() {
+				let params = {}
+
+				if (this.currentChan) 
+					params = { ...params, ...{ chan: this.currentChan }}
+
+				if (this.currentBoard) 
+					params = { ...params, ...{ board: this.currentBoard }}
+
+				if (this.currentThread) 
+					params = { ...params, ...{ thread: this.currentThread }}
+
+				if (this.currentPage) 
+					params = { ...params, ...{ page: this.currentPage }}
+	
+				return params
+			}
+		},
 		methods: {
 			/**
 			 * Основные действия плеера
 			 */
-			loop() {
-				this.options.loop = !this.options.loop
-			},
 			prev() {
-				// Запрещаем уходить в минус индексу
+				// Не даём уходить в минус индексу
 				if (this.currentIndex == 0) return false
 
 				--this.currentIndex
 			},
 			next() {
+				// Не даём уходить дальше, чем есть видео
+				if (this.currentIndex >= this.sources.length - 1) return false
+
 				++this.currentIndex
 			},
 			togglePlay() {
@@ -176,7 +203,10 @@
 			},
 			toggleFullscreen() {
 				if (!document.fullscreenElement && // alternative standard method
-					!document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+					!document.mozFullScreenElement &&
+					!document.webkitFullscreenElement &&
+					!document.msFullscreenElement
+				) {
 					if (this.$video.requestFullscreen) {
 						this.$video.requestFullscreen()
 					} else if (this.$video.msRequestFullscreen) {
@@ -200,10 +230,15 @@
 					}
 				}
 			},
+			toggleLoop() {
+				this.options.loop = !this.options.loop
+			},
 			switchTheme() {
 				this.theme = (this.theme == 'white') ? 'black' : 'white'
 			},
-
+			toggleModal() {
+				this.modal = !this.modal
+			},
 			/**
 			 * Офигенно важная функция по загрузке видео
 			 * @param {array} params Параметры для запроса
@@ -249,17 +284,23 @@
 			// При смене раздела
 			async currentBoard() {
 				// Грузим новые видео
-				await this.loadVideos({
-					chan: this.currentChan,
-					board: this.currentBoard,
-					thread: this.currentThread
-				}).then(_ => {
+				await this.loadVideos(this.params).then(_ => {
 					this.currentVideo = this.sources[this.currentIndex]
 				})
 				// Меняем заголовок
 				this.currentTitle = `${this.appTitle} - /${this.currentBoard}/`
 				// Меняем путь
-				this.$router.replace({ name: 'player-board', params: { board: this.currentBoard } })
+				let params = {}
+				if (this.currentThread) {
+					this.$router.replace({ name: 'player-board-thread', params: {
+						board: this.currentBoard,
+						thread: this.currentThread
+					}})
+				} else {
+					this.$router.replace({ name: 'player-board', params: {
+						board: this.currentBoard
+					}})
+				}
 			},
 			currentIndex() {
 				// Отчищаем таймер
@@ -277,12 +318,7 @@
 				})
 			},
 			async currentPage() {
-				await this.loadVideos({
-					chan: this.currentChan,
-					board: this.currentBoard,
-					thread: this.currentThread,
-					page: this.currentPage
-				})
+				await this.loadVideos(this.params)
 			},
 			theme() {
 				document.body.setAttribute('data-theme', this.theme)

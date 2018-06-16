@@ -6,14 +6,14 @@ import Player from '@/components/Player'
 Vue.use(Router)
 
 const routes = [
-	{ path: '/', component: Player, children: [
-		{ path: ':board',  component: Player, children: [
+	{ path: '/', name: 'home', component: Player, children: [
+		{ path: ':board/', component: Player, children: [
 			{ path: '', redirect: { name: 'player-board' } },
 			{ path: '/', name: 'player-board', component: Player },
-			{ path: '/res/:thread', name: 'player-board-thread', component: Player }
+			{ path: 'res/:thread.html', name: 'player-board-thread', component: Player }
 		] },
 	]},
-	{ path: '*', redirect: 'player-board' }
+	{ path: '*', redirect: 'home' }
 ]
 
 const router = new Router({
