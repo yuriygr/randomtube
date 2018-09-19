@@ -1,10 +1,11 @@
-const formatBytes = (bytes, decimals) => {
-	if (bytes == 0) return '0 Bytes'
-	let k = 1024,
-		dm = decimals || 1,
-		sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-		i = Math.floor(Math.log(bytes) / Math.log(k))
-	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
-}
+const SIZES = ["KB", "MB"];
+const MB = 1000;
+const DP = 2;
 
-export default { formatBytes }
+const formatFileSize = (KB) => {
+  if (KB === 0) return "0 Bytes";
+  const i = Math.floor(Math.log(KB) / Math.log(MB));
+  return `${parseFloat((KB / Math.pow(MB, i)).toFixed(DP))} ${SIZES[i]}`;
+};
+
+export default {formatFileSize}
