@@ -7,24 +7,20 @@
 				</span>
 				<span class="actions__item actions__item--divide">|</span>
 				<span class="actions__item">
-					<a v-if="currentIndex != 0" href="#" @click="prev" @click.prevent.stop>Prev</a>
+					<a v-if="currentIndex != 0" href="#" @click.exact="prev" @click.prevent.stop>Prev</a>
 					<span v-else>Prev</span>
 				</span>
 				<span class="actions__item">
-					<a v-if="currentIndex < sources.length - 1" href="#" @click="next" @click.prevent.stop>Next</a>
+					<a v-if="currentIndex < sources.length - 1" href="#" @click.exact="next" @click.prevent.stop>Next</a>
 					<span v-else>Next</span>
 				</span>
 				<span class="actions__item actions__item--divide">|</span>
 				<span class="actions__item" :class="{ 'actions__item--active': options.loop }">
-					<a href="#" @click="toggleLoop" @click.prevent.stop>Loop</a>
+					<a href="#" @click.exact="toggleLoop" @click.prevent.stop>Loop</a>
 				</span>
 				<span class="actions__item">
 					<a v-if="currentVideo.url" :href="currentVideo.url" download>Download</a>
 					<span v-else>Download</span>
-				</span>
-				<span class="actions__item actions__item--divide">|</span>
-				<span class="actions__item">
-					<a href="#" @click="toggleModal" @click.prevent.stop>?</a>
 				</span>
 			</div>
 			<video
@@ -104,9 +100,6 @@
 
 				sources: []
 			}
-		},
-		metaInfo() {
-			return { title: this.currentTitle }
 		},
 		async mounted() {
 			// Устанавливаем текущий раздел, тем самым в watch грузим видео и меняем заголовок
@@ -303,7 +296,6 @@
 				}
 			},
 			currentIndex() {
-				// Отчищаем таймер
 				if (this.timer)
 					clearTimeout(this.timer)
 
@@ -316,6 +308,9 @@
 					this.$video.load()
 					this.$video.play()
 				})
+			},
+			currentTitle() {
+				document.title = this.currentTitle
 			},
 			async currentPage() {
 				await this.loadVideos(this.params)

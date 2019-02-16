@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Meta from 'vue-meta'
+import VueAnalytics from 'vue-analytics'
 
 import App from '@/components/App'
 import filters from '@/filters'
@@ -9,13 +9,15 @@ import router from '@/router'
 import 'reset-css/reset.css'
 import 'assets/style.css'
 
-// some metakeys
-Vue.use(Meta)
-
 // register global utility filters
-Object.keys(filters).forEach((key) =>
+Object.keys(filters).forEach(key =>
 	Vue.filter(key, filters[key])
 )
+
+Vue.use(VueAnalytics, {
+	id: 'UA-56787403-6',
+	router
+})
 
 // create application
 const app = new Vue({
