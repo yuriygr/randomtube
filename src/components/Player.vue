@@ -117,6 +117,7 @@
 
 			// Прослушиваем эвенты $video
 			this.$video.addEventListener('click', e => {
+				e.preventDefault()
 				this.togglePlay()
 			})
 			this.$video.addEventListener('ended', e => {
