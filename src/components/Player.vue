@@ -41,7 +41,7 @@
 			</video>
 			<div class="player__name">
 				<span v-if="currentVideo.name" v-text="currentVideo.name"></span>
-				<small v-if="currentVideo.filesize">({{ currentVideo.filesize | formatBytes(2) }})</small>
+				<small v-if="currentVideo.filesize">({{ currentVideo.filesize | formatBytes }})</small>
 			</div>
 		</section>
 		<!-- Some helpers -->
@@ -121,7 +121,7 @@
 				this.togglePlay()
 			})
 			this.$video.addEventListener('ended', e => {
-				if (!this.options.loop) 
+				if (!this.options.loop)
 					this.timer = setTimeout(_ => {
 						clearTimeout(this.timer)
 						this.next()
@@ -160,18 +160,18 @@
 			params() {
 				let params = {}
 
-				if (this.currentChan) 
+				if (this.currentChan)
 					params = { ...params, ...{ chan: this.currentChan }}
 
-				if (this.currentBoard) 
+				if (this.currentBoard)
 					params = { ...params, ...{ board: this.currentBoard }}
 
-				if (this.currentThread) 
+				if (this.currentThread)
 					params = { ...params, ...{ thread: this.currentThread }}
 
-				if (this.currentPage) 
+				if (this.currentPage)
 					params = { ...params, ...{ page: this.currentPage }}
-	
+
 				return params
 			}
 		},
