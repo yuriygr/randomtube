@@ -1,0 +1,6 @@
+export { default as router } from '@/app/components/router'
+export { default as directives } from '@/app/components/directives'
+export { default as filters } from '@/app/components/filters'
+export { default as store } from '@/app/components/store'
+export { default as global_ui } from '@/app/components/global_ui'
+export { default as i18n } from '@/app/components/i18n'

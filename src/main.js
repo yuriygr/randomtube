@@ -1,6 +1,15 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
 
-createApp(App).use(router).mount('#app')
+import '@/registerServiceWorker'
+
+import App from '@/App.vue'
+
+// app components & services
+import Norma from '@/app/index.js'
+
+// some styles
+import '@/assets/scss/main.scss'
+
+createApp(App)
+  .use(Norma)
+  .mount('#app')

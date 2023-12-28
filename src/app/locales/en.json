@@ -1,0 +1,140 @@
+{
+  "header": {
+    "nav": {
+      "switch": "Switch",
+      "donate": "Donate",
+      "support": "Support"
+    }
+  },
+  "boards": {
+    "b": "Random",
+    "a": "Anime",
+    "po": "Policy",
+    "kpop": "K-POP",
+    "mov": "Movies",
+    "tv": "Series",
+    "v": "Video games main",
+    "vg": "video games",
+    "cg": "Console games",
+    "ftb": "Football",
+    "mu": "Music",
+    "soc": "Communication",
+    "wm": "Military equipment",
+    "media": "Animation",
+    "fag": "Faggotria",
+    "ne": "Animals",
+    "keira": "Keira Knightley"
+  },
+  "player": {
+    "playlist": {
+      "title": "Playlist"
+    },
+    "playback": {
+      "other": "{n}x",
+      "normal": "{n}x (Normal)"
+    },
+    "bar" : {
+      "prev": "Prev",
+      "play": "Play",
+      "pause": "Pause",
+      "next": "Next",
+      "loop": "Loop",
+      "playlist": "Playlist",
+      "source": "Source",
+      "download": "Download",
+      "options": "Options",
+      "fullscreen": "Fullscreen",
+      "picture-in-picture": "Picture in picture",
+      "moar": "From thread",
+      "report": "Report",
+      "copy_link": "Copy link",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "keybindings": "Keybindings",
+      "loading": "Loading",
+      "refresh": "Refresh",
+      "like": "Like",
+      "unlike": "Unlike",
+      "toggle-theme": "Toggle theme",
+      "navigation": "Navigation",
+      "video": "Video",
+      "file": "File",
+      "playback-rate": "Playback rate"
+    }
+  },
+  "modals": {
+    "boards": "Boards",
+    "filters": "Filters",
+    "report_entry": "Report",
+    "keybindings": "Key bindings"
+  },
+  "error": {
+    "empty_data": "On ho...",
+    "not_found": "Not found"
+  },
+  "actions": {
+    "close": "Close",
+    "refresh": "Refresh",
+    "cancel": "Cancel",
+    "send": "Send",
+    "apply": "Apply",
+    "back": "Back"
+  },
+  "keybindings": {
+    "move-backward-video": "Previous video",
+    "move-forward-video": "Next video",
+    "move-backward-image": "Previous image",
+    "move-forward-image": "Next image",
+    "volume-up": "Volume +",
+    "volume-down": "Volume -",
+    "play-pause": "Play/Pause",
+    "fullscreen": "Fullscreen",
+    "mute": "Mute",
+    "loop": "Loop",
+    "copy-item-link": "Copy video link",
+    "add-site-to-favorite": "Add site to favorite",
+    "zen-mode": "Zen-mode",
+    "increase-playback-rate": "Increase playback rate",
+    "decrease-playback-rate": "Decrease playback rate"
+  },
+  "report": {
+    "why": "What's wrong with this video?",
+    "reason": {
+      "gore": "Violence or Gore",
+      "harassment": "Bullying or Harassment",
+      "hateful": "Hateful Conduct",
+      "self-harm": "Self-Harm",
+      "nudity": "Nudity or Sexually Explicit",
+      "spam": "Spam or Scams",
+      "screamer": "Screamer",
+      "terrorism": "Terrorism"
+    }
+  },
+  "errors": {
+    "unauthorized": {
+      "icon": "spy-line",
+      "title": "Unauthorized",
+      "description": "To view the content you must log in"
+    },
+    "bad_request": {
+      "icon": "user-line",
+      "title": "Bad Request",
+      "description": "Most likely, you did something wrong and the server did not understand you"
+    },
+    "network_error": {
+      "icon": "cloud-off-line",
+      "title": "Network Error",
+      "description": "Most likely, the server is unavailable or simply does not want to talk"
+    },
+    "invalid_connection": {
+      "icon": "cloud-off-line",
+      "title": "Invalid Connection",
+      "description": "Most likely, the server is unavailable or simply does not want to talk"
+    },
+    "timeout_exceeded": {
+      "icon": "cloud-off-line",
+      "title": "Timeout exceeded",
+      "description": "The server took too long to respond, my dude"
+    }
+  }
+}

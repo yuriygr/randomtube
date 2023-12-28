@@ -1,0 +1,244 @@
+$grid-xs: 420px;
+$grid-sm: 768px;
+$grid-md: 992px;
+$grid-lg: 1200px;
+
+$columns: 12;
+
+$viewport-layouts: (
+  "xs":( "min-width": $grid-xs, "width": $grid-xs - 15px ), 
+  "sm":( "min-width": $grid-sm, "width": $grid-sm - 15px ), 
+  "md":( "min-width": $grid-md, "width": $grid-md - 15px ), 
+  "lg":( "min-width": $grid-lg, "width": $grid-lg - 15px )
+);
+
+$gutter-width: 1rem;
+$half-gutter-width: calc($gutter-width / 2);
+$gutter-compensation: calc(-1 * $half-gutter-width);
+
+@mixin grid-row ($reverse:false) {
+  @include grid-row-direction($reverse);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  margin-right: $gutter-compensation;
+  margin-left: $gutter-compensation;
+}
+
+@mixin grid-row-direction ($reverse:false) {
+  @if ($reverse) {
+    flex-direction: row-reverse;
+  } @else {
+    flex-direction: row;
+  }
+}
+
+@mixin grid-row-alignment-horizontal ($alignment) {
+  $justify: inherit;
+
+  @if ($alignment == center) {
+    $justify: center;
+  } @else if ($alignment == end) {
+    $justify: flex-end;
+  } @else if ($alignment == start) {
+    $justify: flex-start;
+  }
+
+  justify-content: $justify;
+  text-align: $alignment;
+}
+
+@mixin grid-row-alignment-vertical ($alignment) {
+  @if ($alignment == middle) {
+    align-items: center;
+  } @else if ($alignment == bottom) {
+    align-items: flex-end;
+  } @else {
+    align-items: flex-start;
+  }
+}
+
+@mixin grid-row-spacing ($spacing) {
+  justify-content: $spacing;
+}
+
+@mixin grid-column ($reverse:false) {
+  @include grid-column-direction($reverse);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 1 auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding-right: $half-gutter-width;
+  padding-left: $half-gutter-width;
+  visibility: initial;
+  opacity: 1;
+}
+
+@mixin grid-column-direction ($reverse:false) {
+  @if ($reverse) {
+    flex-direction: column-reverse;
+  } @else {
+    flex-direction: column;
+  }
+}
+
+@mixin grid-column-span ($columns-to-span:12, $total-columns-in-row:12) {
+  @if ($columns-to-span == auto) {
+    flex-grow: 1;
+    flex-basis: 0;
+    max-width: 100%;
+
+  } @else {  
+    $span-percentage: calc($columns-to-span / $total-columns-in-row);
+
+    flex-basis: calc($span-percentage * 100%);
+    max-width: calc($span-percentage * 100%);
+  } 
+}
+
+@mixin grid-column-offset ($columns-to-offset, $total-columns-in-row:12) {
+  margin-left: calc(calc($columns-to-offset / $total-columns-in-row) * 100%);
+}
+
+@mixin grid-column-order ($position) {
+  @if ($position == last) {
+    $position: 9999;
+  } @else if ($position == first) {
+    $position: -9999;
+  }
+
+  order: $position;
+}
+
+@mixin grid-column-hide ($key) {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+@mixin grid-column-show ($key) {
+  display: flex;
+  visibility: initial;
+  opacity: 1;
+}
+
+.container-fluid,
+.container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-fluid {
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+.row {
+  @include grid-row;
+}
+
+.row.reverse {
+  @include grid-row-direction(true);
+}
+
+.col.reverse {
+  @include grid-column-direction($reverse:true);
+}
+
+@mixin example-viewport ($key) {
+  .col-#{$key} {
+    $str: "&";
+    @for $i from 1 through $columns {
+      $str: $str + "," + & + "-" + $i + "," + & + "-offset-" + $i;
+    }
+
+    @at-root #{$str} {
+      @include grid-column;
+    }
+
+    & {
+      // no idea why the indenting no longer works for this and why I need & {}
+      @include grid-column-span(auto);
+    }
+
+    &-hide {
+      @include grid-column-hide($key);
+    }
+
+    &-show {
+      @include grid-column-show($key);
+    }
+
+    @for $i from 1 through $columns {
+      &-#{$i} {
+        @include grid-column-span($i);
+      }
+
+      &-offset-#{$i} {
+        @include grid-column-offset($i);
+      }
+    }
+  }
+
+  .start-#{$key} {
+    @include grid-row-alignment-horizontal(start);
+  }
+
+  .center-#{$key} {
+    @include grid-row-alignment-horizontal(center);
+  }
+
+  .end-#{$key} {
+    @include grid-row-alignment-horizontal(end);
+  }
+
+  .top-#{$key} {
+    @include grid-row-alignment-vertical(top);
+  }
+
+  .middle-#{$key} {
+    @include grid-row-alignment-vertical(middle);
+  }
+
+  .bottom-#{$key} {
+    @include grid-row-alignment-vertical(bottom);
+  }
+
+  .around-#{$key} {
+    @include grid-row-spacing(space-around);
+  }
+
+  .between-#{$key} {
+    @include grid-row-spacing(space-between);
+  }
+
+  .first-#{$key} {
+    @include grid-column-order(first);
+  }
+
+  .last-#{$key} {
+    @include grid-column-order(last);
+  }
+}
+
+@each $key, $value in $viewport-layouts {
+  @if ($key == xs) {
+    @include example-viewport($key);
+
+  } @else {
+
+    $min-width: map-get($value, "min-width");
+    $width: map-get($value, "width");
+    @media (min-width: $min-width) {
+      @include example-viewport($key);
+
+      .container-fluid,
+      .container {
+        width: $width;
+      }
+    }
+
+  }
+}

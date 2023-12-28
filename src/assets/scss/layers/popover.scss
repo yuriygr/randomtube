@@ -1,0 +1,46 @@
+.popover-layer {
+  --popover-border-radius: 6px;
+
+  --popover-main-offset: 6px;
+  --popover-search-bottom-offset: 4px;
+  --popover-scrollbar-offset: 8px;
+  --popover-item-font-size: 13px;
+  --popover-item-border-radius: 6px;
+  --popover-item-offset-left: 10px;
+  --popover-item-offset-right: 18px;
+  --popover-item-gap: 4px;
+  --popover-item__icon-size: 22px;
+  --popover-item__icon-offset: 10px;
+}
+
+.popover-layer {
+  --popover-background: #fff;
+  --popover-color: var(--x-color);
+  --popover-box-shadow: 0 4px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.25);
+  
+  --popover-item-background: transparent;
+  --popover-item-color: inherit;
+
+  --popover-item-background--hover: #f0f2f5;
+  --popover-item-color--hover: inherit;
+  --popover-item-background--selected: #e7e1fe;
+  --popover-item-color--selected: inherit;
+  --popover-item-background--selected-hover: #d8d1f4;
+  --popover-item-color--selected-hover: inherit;
+
+  html[data-theme="black"] & {
+    --popover-background: #181818;
+    --popover-color: var(--x-color);
+    --popover-box-shadow: 0 4px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.25);
+
+    --popover-item-background: transparent;
+    --popover-item-color: inherit;
+
+    --popover-item-background--hover: #222;
+    --popover-item-color--hover: inherit;
+    --popover-item-background--selected: #332d46;
+    --popover-item-color--selected: inherit;
+    --popover-item-background--selected-hover: #3d3653;
+    --popover-item-color--selected-hover: inherit;
+  }
+}

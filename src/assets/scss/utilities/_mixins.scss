@@ -1,0 +1,33 @@
+/**
+ * Generate button style
+ * @param {String} - $name - required
+ * @param {String} - $background - required - format accepted: hsla, rgb, #
+ * @param {Strong} - $color - optionnal - format accepted: hsla, rgb, #
+ * If no $color specify, the 'set-text-color' function is called
+ * go check the _function.scss
+ */
+@mixin generate-button($name, $background, $color: '') {
+  .button-#{$name} {
+    background: $background;
+    @if ($color == '') {
+      color: set-text-color($background);
+    } @else {
+      color: $color;
+    }
+
+    &:hover {
+      background: lighten($background, 10%);
+    }
+  }
+}
+
+@mixin generate-card() {
+  background: var(--x-color-white);
+  box-shadow: var(--x-box-shadow--depth-4);
+  border-radius: var(--x-border-radius--base);
+  transition: all .1s var(--x-motion-timing--standard);
+
+  &:hover {
+    box-shadow: var(--x-box-shadow--depth-8);
+  }
+}

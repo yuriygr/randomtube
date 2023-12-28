@@ -1,0 +1,165 @@
+:root {  
+  // Шапка сайта
+  --x-site-header-height: 36px;
+  --x-site-header-item-size: 36px;
+
+  // Вычитаем высоту шапки сайта
+  --x-player-height: calc(100dvh - var(--x-site-header-height));
+  --x-player-video-margin: 5rem;
+
+  // Высота контейнера плеера - высота бара плеер - отступы сверху и снизу в плеере
+  --x-player-video-max-height: calc(var(--x-player-height) - var(--x-player-bar-height) - var(--x-player-video-margin));
+  --x-player-bar-height: 64px;
+  --x-player-bar-buttons-offset: 10px;
+
+  --x-player-bar-progressbar-z-index: 90;
+  --x-player-bar-progressbar-height: 3px;
+  --x-player-bar-progressbar-offset: 20px;
+
+  --x-player-bar-item-size: 36px;
+  --x-player-bar-items-gap: 2px;
+
+  --x-player-playlist-item-thumbnail-size: 50px;
+
+  .player__playlist {
+    --playlist-padding: 12px;
+    --playlist__header-font-size: 15px;
+    --playlist__header-font-weight: 500;
+  }
+}
+
+// Белая тема
+html {
+  --x-background: #fcfcfc;
+  --x-color: #444;
+
+  .app-header {
+    --x-site-header-item-background: transparent;
+    --x-site-header-item-color: #777;
+
+    --x-site-header-item-background--hover: transparent;
+    --x-site-header-item-color--hover: #0f0f0f;
+  }
+
+  .player {
+    --x-player-box-shadow: 0 0.5em 2em #7a7a7a;
+
+    // Bar
+    --x-player-bar-background: transparent;
+    --x-player-bar-color: #444;
+    // Progressbar
+    --x-player-bar-progressbar-color: #ebebeb;
+    --x-player-bar-progressbar-current-color: #9f8fd8;
+    --x-player-bar-progressbar-buffered-color: #d4d4d4;
+    --x-player-bar-progressbar-knob-color: transparent;
+    // Item
+    --x-player-bar-item-background: transparent;
+    --x-player-bar-item-color: #444;
+
+    --x-player-bar-item-background--hover: #ebebeb;
+    --x-player-bar-item-color--hover: #444;
+
+    --x-player-bar-item-like-color: #ee5151;
+    --x-player-bar-item-like-background--hover: #f9e2e3;
+
+    --x-player-bar-divider-color: #ebebeb;
+  }
+}
+
+html[data-theme="black"] {
+  --x-background: #0f0f0f;
+  --x-color: #fffcea;
+
+  .app-header {
+    --x-site-header-item-background: transparent;
+    --x-site-header-item-color: #777;
+
+    --x-site-header-item-background--hover: transparent;
+    --x-site-header-item-color--hover: #fffcea;
+  }
+
+  .player {
+    --x-player-box-shadow: 0 .5em 2em #000;
+
+    // Bar
+    --x-player-bar-background: transparent;
+    --x-player-bar-color: #fffcea;
+    // Progressbar
+    --x-player-bar-progressbar-color: #202020;
+    --x-player-bar-progressbar-current-color: #6f619d;
+    --x-player-bar-progressbar-buffered-color: #444;
+    --x-player-bar-progressbar-knob-color: transparent;
+    // Item
+    --x-player-bar-item-background: transparent;
+    --x-player-bar-item-color: #fffcea;
+
+    --x-player-bar-item-background--hover: #222222;
+    --x-player-bar-item-color--hover: #fffcea;
+
+    --x-player-bar-item-like-color: #b23a3a;
+    --x-player-bar-item-like-background--hover: #281718;
+
+    --x-player-bar-divider-color: #202020;
+  }
+}
+
+.player__playlist {
+  --playlist-background: #f4f4f4f0;
+
+  --playlist__header-background: #fff;
+  --playlist__header-color: #444;
+  --playlist__header-border-bottom: 1px solid #e4e4e4;
+
+  --x-player-playlist-item-background: transparent;
+  --x-player-playlist-item-background--hover: #ededed;
+  --x-player-playlist-item-background--active: #e7e7e7;
+
+  html[data-theme="black"] & {
+    --playlist-background: #151515fc;
+
+    --playlist__header-background: var(--x-background);
+    --playlist__header-color: #ddd;
+    --playlist__header-border-bottom: 1px solid #222;
+
+    // Item
+    --x-player-playlist-item-background: transparent;
+    --x-player-playlist-item-background--hover: #232323;
+    --x-player-playlist-item-background--active: #232323;
+  }
+
+}
+
+
+
+.board-switch {
+  --board-switch-item-background--hover: #ededed;
+  --board-switch-item-background--active: #e7e7e7;
+
+  html[data-theme="black"] & {
+    --board-switch-item-background--hover: #232323;
+    --board-switch-item-background--active: #232323;
+  }
+}
+
+
+
+html[data-tint="purpur"] {
+  --tint: #9f8fd8;
+  &[data-theme='black'] {
+    --tint: #6f619d;
+  }
+}
+
+html[data-tint="red"] {
+  --tint: #e43e3e;
+  &[data-theme='black'] {
+    --tint: #871515;
+  }
+}
+
+html[data-tint="green"] {
+  --tint: #24b52c;
+  &[data-theme='black'] {
+    --tint: #095b0e;
+  }
+}

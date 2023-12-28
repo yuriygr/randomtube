@@ -1,16 +1,26 @@
 {
-  "name": "front-new",
-  "version": "0.1.0",
+  "name": "vue3-randomtube",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve-tube": "vue-cli-service serve --mode tube",
+    "serve-picture": "vue-cli-service serve --mode picture",
+    "build-tube": "vue-cli-service build --mode tube",
+    "build-picture": "vue-cli-service build --mode picture"
   },
   "dependencies": {
+    "@sentry/vue": "^7.57.0",
+    "@vue-norma/ui": "^2.1.5",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "localforage": "^1.10.0",
+    "mitt": "^3.0.0",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-gtag": "^2.0.1",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

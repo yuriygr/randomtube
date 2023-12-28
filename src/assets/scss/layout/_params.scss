@@ -1,0 +1,37 @@
+:root {
+  --x-font-family: #{$x-font-family};
+  
+  @each $name, $size in $x-font-sizes {
+    --x-font-size--#{$name}: #{$size};
+  }
+
+  @each $name, $weight in $x-font-weights {
+    --x-font-weight--#{$name}: #{$weight};
+  }
+
+  @each $palette_name, $palette_tint in $x-color-palette {
+    --x-color-#{$palette_name}: #{$palette_tint};
+
+    @each $ts_name, $ts in generate-tint-shade($palette_tint) {
+      --x-color-#{$palette_name}--#{$ts_name}: #{$ts};
+    }
+  }
+
+  @each $name, $shadow in $x-box-shadows {
+    --x-box-shadow--#{$name}: #{$shadow};
+  }
+
+  @each $name, $timing in $x-motion-timings {
+    --x-motion-timing--#{$name}: #{$timing};
+  }
+
+  --x-transition: #{$x-transition};
+
+  @each $name, $size in $x-border-radius {
+    --x-border-radius--#{$name}: #{$size};
+  }
+
+  @each $name, $color in $x-brands-color {
+    --x-brands-color--#{$name}: #{$color};
+  }
+}

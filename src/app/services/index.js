@@ -1,0 +1,6 @@
+export { default as api } from '@/app/services/api'
+export { default as bus } from '@/app/services/bus'
+export { default as alerts } from '@/app/services/alerts'
+export { default as storage } from '@/app/services/storage'
+export { default as popover } from '@/app/services/popover'
+export { default as modals } from '@/app/services/modals'

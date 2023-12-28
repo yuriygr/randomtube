@@ -1,19 +1,39 @@
 # front-new
 
-## Project setup
-```
-npm install
-```
+## Структура папок
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Обычно, в данном бойлерплейте оно выглядит так
 
-### Compiles and minifies for production
 ```
-npm run build
-```
++-- app
+|  +--  components
+|  |  -- filters
+|  |  -- global_ui
+|  |  -- router
+|  |  -- store
+|  |  -- i18n
+|  +--  services
+|  |  -- api
+|  |  -- bus
+|  |  -- storage
+|  |  -- utilities
+|  +-- locales
+|  |  -- ru.json
+|  |  -- en.json
+|  |  etc
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
++-- components
+|  +-- _global
+|  |  +-- layers
+|  |  +-- page
+|  |  -- Icon.vue
+|  +-- _site
+|  +-- modals
+|  etc
+
+
++-- Views
+|  -- Home.vue
+|  -- Help.vue
+|  etc
+```

@@ -1,0 +1,40 @@
+// Add percentage of white to a color
+@function tint($color, $percent){
+  @return mix(white, $color, $percent);
+}
+
+// Add percentage of black to a color
+@function shade($color, $percent){
+  @return mix(black, $color, $percent);
+}
+
+/**
+ * Generate tint/shade color
+ */
+@function generate-tint-shade($color) {
+  $arr: ();
+  $percents: 5, 10, 20, 30, 40, 50, 60, 70, 80, 85, 90;
+  @each $percent in $percents {
+    $arr: map-merge($arr, (
+      tint#{$percent}: tint($color, $percent),
+      shade#{$percent}: shade($color, $percent),
+    ));
+  }
+
+  @return $arr;
+}
+
+/**
+ * Generate shade color
+ */
+@function generate-shade($color) {
+  $arr: ();
+  $percents: 5, 10, 20, 30, 40, 50, 60, 70, 80, 85, 90;
+  @each $percent in $percents {
+    $arr: map-merge($arr, (
+      shade#{$percent}: shade($color, $percent),
+    ));
+  }
+
+  @return $arr;
+}

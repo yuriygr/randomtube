@@ -1,0 +1,22 @@
+.alerts-layer {
+  --alerts-layer-offset-top: 1rem;
+  --alerts-layer-offset-right: 1rem;
+
+  --alerts-item-font-size: 13px;
+  --alerts-item-border-radius: 12px;
+  --alerts-item-gap: .75rem;
+}
+
+.alerts-layer {
+  --alerts-item-tint-color: #f4f4f4;
+  --alerts-item-tint-color--success: #afd4a9;
+  --alerts-item-tint-color--info: #c1c9d9;
+  --alerts-item-tint-color--danger: #f2ab99;
+
+  html[data-theme="black"] & {
+    --alerts-item-tint-color: #fffcea;
+    --alerts-item-tint-color--success: #afd4a9;
+    --alerts-item-tint-color--info: #c1c9d9;
+    --alerts-item-tint-color--danger: #f2ab99;
+  }
+}

@@ -1,0 +1,49 @@
+.modal-layer {
+  --modal-layer__footer-font-size: 13px;
+
+  --modal-border-radius: 12px;
+  --modal-padding: 12px;
+
+  --modal__header-font-size: 15px;
+  --modal__header-font-weight: 500;
+  --modal__placeholder-font-size: 15px;
+  --modal__checklist-item-gap: .75rem;
+}
+
+.modal-layer {
+  --modal-layer-background: rgba(255, 255, 255, 0.4);
+  --modal-layer__footer-color: #333;
+
+  --modal-background: #fff;
+  --modal-box-shadow: var(--x-box-shadow--modal);
+
+  --modal__header-color: #444;
+  --modal__header-border-bottom: 1px solid #e4e4e4;
+
+  --modal__placeholder-color: #888;
+
+  --modal__search-background: #fff;
+  --modal__search-color: #444;
+
+  --modal__checklist-item-background: #f9f9f9;
+  --modal__checklist-item-checked-color: #6f619d;
+
+  html[data-theme="black"] & {
+    --modal-layer-background: rgba(0, 0, 0, 0.85);
+    --modal-layer__footer-color: #888;
+
+    --modal-background: var(--x-background);
+    --modal-box-shadow: var(--x-box-shadow--modal);
+
+    --modal__header-color: #ddd;
+    --modal__header-border-bottom: 1px solid #222;
+
+    --modal__placeholder-color: #888;
+
+    --modal__search-background: var(--x-background);
+    --modal__search-color: #ddd;
+
+    --modal__checklist-item-background: #0e0e0e;
+    --modal__checklist-item-checked-color: #9f8fd8;
+  }
+}
