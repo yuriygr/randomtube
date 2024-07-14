@@ -2,7 +2,7 @@ import VueGtag from 'vue-gtag'
 
 // app components & services
 import { router, directives, filters, store, global_ui, i18n } from '@/app/components'
-import { api, alerts, modals, popover, bus, storage } from '@/app/services'
+import { api, alerts, meta, modals, popover, bus, storage } from '@/app/services'
 
 // probrasivaem-s
 store.$api = api
@@ -29,6 +29,9 @@ export default new class {
       baseURL: process.env.VUE_APP_API_ENDPOINT,
       version: process.env.VUE_APP_API_VERSION
     },
+    meta: {
+      defaultTitle: process.env.VUE_APP_TITLE
+    },
     bus: {
     	openSwitchBoard: 'switchBoard:open'
     }
@@ -48,6 +51,7 @@ export default new class {
   
     app.use(api, this.options.api)
     app.use(alerts)
+    app.use(meta, this.options.meta)
     app.use(modals)
     app.use(popover)
     app.use(bus, this.options.bus)

@@ -1,4 +1,12 @@
 {
+  "app": {
+    "version": "Version {version}",
+    "locale": {
+      "ua": "Украинский",
+      "en": "Английский",
+      "ru": "Русский"
+    }
+  },
   "header": {
     "nav": {
       "switch": "Switch",

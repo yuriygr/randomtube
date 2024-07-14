@@ -1,18 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Help from '@/views/Help'
+import About from '@/views/About'
 import Search from '@/views/Search'
 
 import PlayerRoutes from '@/app/components/router/modules/player'
+import HelpRoutes from '@/app/components/router/modules/help'
 
 const routes = [
 	...PlayerRoutes,
+	...HelpRoutes,
 
 	{ path: '/search', name: 'search', component: Search },
-
-	{ path: '/help', name: 'help', component: Help, children: [
-
-	] },
+	{ path: '/about', name: 'about', component: About },
 
 	{ path: '/:pathMatch(.*)*', redirect: { name: 'home' } }
 ]

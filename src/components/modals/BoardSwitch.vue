@@ -2,8 +2,8 @@
   <modal class="board-switch">
     <modal-header :title="$t('modals.boards')">
       <template #after>
-        <icon-button name="search-line" width="18" height="18" @click.exact="toggleSearch" :title="$t('actions.search')" />
-        <icon-button name="close-circle-line" width="18" height="18" @click.exact="closeModal" :title="$t('actions.close')" />
+        <icon-button name="search-line" mode="tertiary" @click.exact="toggleSearch" :title="$t('actions.search')" />
+        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
 
@@ -48,18 +48,18 @@
     />
   
     <footer v-if="!searching && filteredBoards.length >= 0" class="modal__footer">
-      <Button icon_before="refresh-fill" @click.exact="refresh">{{ $t('actions.refresh') }}</Button>
+      <n-button size="l" stretched mode="secondary" icon_before="refresh-fill" @click.exact="refresh">{{ $t('actions.refresh') }}</n-button>
     </footer>
   </modal>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { Modal, ModalHeader, ModalPlaceholder, Button, Icon, IconButton } from '@vue-norma/ui'
+import { Modal, ModalHeader, ModalPlaceholder, NButton, Icon, IconButton } from '@vue-norma/ui'
 
 export default {
   name: 'board-switch-modal',
-  components: { Modal, ModalHeader, ModalPlaceholder, Button,  Icon, IconButton },
+  components: { Modal, ModalHeader, ModalPlaceholder, NButton,  Icon, IconButton },
   data() {
     return {
       searchQuery: '',

@@ -1,6 +1,6 @@
 :root {  
   // Шапка сайта
-  --x-site-header-height: 36px;
+  --x-site-header-height: 40px;
   --x-site-header-item-size: 36px;
 
   // Вычитаем высоту шапки сайта
@@ -103,31 +103,6 @@ html[data-theme="black"] {
   }
 }
 
-.player__playlist {
-  --playlist-background: #f4f4f4f0;
-
-  --playlist__header-background: #fff;
-  --playlist__header-color: #444;
-  --playlist__header-border-bottom: 1px solid #e4e4e4;
-
-  --x-player-playlist-item-background: transparent;
-  --x-player-playlist-item-background--hover: #ededed;
-  --x-player-playlist-item-background--active: #e7e7e7;
-
-  html[data-theme="black"] & {
-    --playlist-background: #151515fc;
-
-    --playlist__header-background: var(--x-background);
-    --playlist__header-color: #ddd;
-    --playlist__header-border-bottom: 1px solid #222;
-
-    // Item
-    --x-player-playlist-item-background: transparent;
-    --x-player-playlist-item-background--hover: #232323;
-    --x-player-playlist-item-background--active: #232323;
-  }
-
-}
 
 
 

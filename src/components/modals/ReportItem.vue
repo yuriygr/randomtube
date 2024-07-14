@@ -2,7 +2,7 @@
   <modal size="small">
     <modal-header :title="$t('modals.report_entry')">
       <template #after>
-        <icon-button name="close-circle-line" width="18" height="18" @click.exact="closeModal" :title="$t('actions.close')" />
+        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
 
@@ -16,18 +16,18 @@
     />
 
     <footer class="modal__footer">
-      <Button type="secondary" @click.exact="closeModal">{{ $t('actions.cancel') }}</Button>
-      <Button :disabled="current == 0" @click.exact="sendReport">{{ $t('actions.send') }}</Button>
+      <n-button type="secondary" @click.exact="closeModal">{{ $t('actions.cancel') }}</n-button>
+      <n-button :disabled="current == 0" @click.exact="sendReport">{{ $t('actions.send') }}</n-button>
     </footer>
   </modal>
 </template>
 
 <script>
-import { Modal, ModalHeader, ModalChecklist, Button, IconButton } from '@vue-norma/ui'
+import { Modal, ModalHeader, ModalChecklist, NButton, IconButton } from '@vue-norma/ui'
 
 export default {
   name: 'report-item-modal',
-  components: { Modal, ModalHeader, ModalChecklist, Button, IconButton },
+  components: { Modal, ModalHeader, ModalChecklist, NButton, IconButton },
   props: [ 'data' ],
   data() {
     return {

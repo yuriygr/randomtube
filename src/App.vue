@@ -6,18 +6,20 @@
 
   <alerts-layer />
   <modals-layer />
-  <loading-layer />
+  <loading-layer :loading="loading" />
   <popover-layer />
 
   <icons-sprite-layer :path="require('@/assets/symbols.svg')" />
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import { mapGetters, mapState } from 'vuex'
 import { AlertsLayer, IconsSpriteLayer, LoadingLayer, ModalsLayer, PopoverLayer } from '@vue-norma/ui'
+
 import { AppHeader, AppContent, AppLayout } from '@/components/_app'
 
-import BoardSwitchModal from '@/components/modals/BoardSwitch'
+let BoardSwitchModal = defineAsyncComponent(() => import("@/components/modals/BoardSwitch.vue"))
 
 export default {
   name: 'app',
@@ -31,34 +33,43 @@ export default {
     }
   },
   computed: {
-    ...mapState('app', [ 'theme', 'pwa' ]),
+    ...mapState('app', [ 'locale', 'theme', 'loading' ]),
     ...mapState('player', [ 'zen' ]),
     ...mapGetters('app', [ 'themeStatusBar' ])
   },
   methods: {
     switchBoard() {
       this.$modals.show(BoardSwitchModal)
+      this.$popover.close()
     },
-    changeDataset(key, value) {
-      if (value == false) {
-        delete document.documentElement.dataset[key]
-        return
-      }
-      document.documentElement.dataset[key] = value
+
+    setZen(state = false) {
+      this.changeDataset('zen', state ? 'on' : false)
+    }, 
+    setModal(state = false) {
+      this.changeDataset('modal', state ? 'on' : false)
+    }, 
+    setLocale(state = false) {
+      this.$i18n.locale = state
+      this.changeDataset('locale', state ? state : false)
+      document.documentElement.setAttribute("lang", state ? state : false);
     },
-    changeMeta(key, value) {
-     document.querySelector(`meta[name="${key}"]`).setAttribute("content", value)
-    } 
+    setTheme(state = false) {
+      this.changeDataset('theme', state)
+      this.changeMeta('theme-color', this.themeStatusBar)
+    }, 
+    setLayout(state = false) {
+      this.changeDataset('layout', state ?? false)
+    }, 
   },
   mounted() {
     this.$store.dispatch('initApplication')
 
-    this.changeDataset('zen', this.zen ? 'on' : false)
-    this.changeDataset('layout', this.$route.meta.layout ?? false)
-    this.changeDataset('modal', this.modal ? 'on' : false)
-    this.changeDataset('pwa', this.pwa ? 'on' : false)
-    this.changeDataset('theme', this.theme)
-    this.changeMeta('theme-color', this.themeStatusBar)
+    this.setZen(this.zen)
+    this.setModal(this.modal)
+    this.setLocale(this.locale)
+    this.setTheme(this.theme)
+    this.setLayout(this.$route.meta.layout)
   },
   created() {
     this.$modals.on('show', _ => this.modal = true)
@@ -68,20 +79,19 @@ export default {
   },
   watch: {
     zen(to) {
-      this.changeDataset('zen', to ? 'on' : false)
+      this.setZen(to)
     },
     modal(to) {
-      this.changeDataset('modal', to ? 'on' : false)
+      this.setModal(to)
     },
-    pwa(to) {
-      this.changeDataset('pwa', to ? 'on' : false)
+    locale(to) {
+      this.setLocale(to)
     },
     theme(to) {
-      this.changeDataset('theme', to)
-      this.changeMeta('theme-color', this.themeStatusBar)
+      this.setTheme(to)
     },
     '$route.meta.layout'(to) {
-      this.changeDataset('layout', to ?? false)
+      this.setLayout(to)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <span :class="[ 'bar-item', { 'bar-item--disabled': disabled, 'bar-item--active': active }]" :title="title">
+  <component :is="component"  :class="[ 'bar-item', { 'bar-item--disabled': disabled, 'bar-item--active': active }]" :title="title">
     <icon :name="icon + (!disabled ? '-fill' : '-line')" size="18" />
-  </span>
+  </component>
 </template>
 
 <script>
@@ -20,7 +20,11 @@ export default {
     active: {
       type: Boolean,
       default: false
-    }
+    },
+    component: {
+      type: String,
+      default: 'span'
+    },
   }
 }
 </script>

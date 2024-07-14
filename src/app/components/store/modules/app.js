@@ -11,14 +11,11 @@ export default {
       title:    process.env.VUE_APP_TITLE,
       basePath: process.env.VUE_APP_BASE_URL,
       theme:    process.env.VUE_APP_DEFAULT_THEME,
-      pwa:      process.env.VUE_APP_PWA_ENABLED,
+      locale:   process.env.VUE_APP_I18N_LOCALE,
+      version:  process.env.PACKAGE_VERSION,
       mode:     process.env.VUE_APP_MODE,
 
-      loading: {
-        global: false,
-        trailing: false
-      },
-  
+      loading: false,
       error: {}
     }
   },
@@ -26,13 +23,11 @@ export default {
     'SET_THEME'(state, payload) {
       state.theme = payload
     },
-    'SET_PWA'(state, payload) {
-      state.pwa = payload
-    },
+    'SET_LOCALE'(state, payload) {
+      state.locale = payload
+    }, 
     'SET_LOADING'(state, payload) {
-      Object.keys(payload).forEach(key => {
-        state.loading[key] = payload[key]
-      })
+      state.loading = payload
     },
     'SET_ERROR'(state, payload) {
       Object.keys(payload).forEach(key => {
@@ -46,7 +41,7 @@ export default {
   actions: {
     init({ commit, state }) {
       commit('SET_THEME', localStorage.getItem('theme') || state.theme)
-      commit('SET_PWA', localStorage.getItem('pwa') || state.pwa)
+      commit('SET_LOCALE', localStorage.getItem('locale') || state.locale)
     },
     toggleTheme({ commit, state }) {
       commit('SET_THEME', (state.theme == 'white') ? 'black' : 'white')
@@ -56,7 +51,7 @@ export default {
     themeStatusBar(state) {
       let colors = []
       colors['black'] = '#0f0f0f'
-      colors['white'] = '#fcfcfc'
+      colors['white'] = '#ffffff'
       return colors[state.theme]
     },
     getLoading() {

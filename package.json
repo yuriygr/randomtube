@@ -3,14 +3,14 @@
   "version": "1.0.5",
   "private": true,
   "scripts": {
-    "serve-tube": "vue-cli-service serve --mode tube",
+    "serve-tube": "vue-cli-service serve --mode tube.local",
     "serve-picture": "vue-cli-service serve --mode picture",
-    "build-tube": "vue-cli-service build --mode tube",
+    "build-tube": "vue-cli-service build --mode tube.prod",
     "build-picture": "vue-cli-service build --mode picture"
   },
   "dependencies": {
     "@sentry/vue": "^7.57.0",
-    "@vue-norma/ui": "^2.1.5",
+    "@vue-norma/ui": "^2.4.4",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "localforage": "^1.10.0",
@@ -27,6 +27,7 @@
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "compression-webpack-plugin": "^11.0.0",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0"
   }

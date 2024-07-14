@@ -1,5 +1,24 @@
 const { defineConfig } = require('@vue/cli-service')
+const { DefinePlugin } = require('webpack')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
+
+const packageJson = require('./package.json')
+
 module.exports = defineConfig({
+  chainWebpack: config => {
+    config.resolve.alias.set('vue-i18n', 'vue-i18n/dist/vue-i18n.cjs.js'),
+    config.plugin('CompressionWebpackPlugin').use(CompressionWebpackPlugin, [{
+      filename: '[file].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+      threshold: 10240,
+      minRatio: 0.8
+    }]),
+    config.plugin('DefinePlugin').use(DefinePlugin, [{
+      'process.env.PACKAGE_VERSION': JSON.stringify(packageJson.version)
+    }])
+  },
   transpileDependencies: true,
   productionSourceMap: false,
   pwa: {
