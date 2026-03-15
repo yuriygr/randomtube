@@ -64,12 +64,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('initApplication')
-
-    this.setZen(this.zen)
-    this.setModal(this.modal)
-    this.setLocale(this.locale)
-    this.setTheme(this.theme)
-    this.setLayout(this.$route.meta.layout)
   },
   created() {
     this.$modals.on('show', _ => this.modal = true)
@@ -77,21 +71,40 @@ export default {
 
     this.$bus.on(this.$bus.openSwitchBoard, this.switchBoard)
   },
+  beforeDestroy() {
+    this.$modals.off('show')
+    this.$modals.off('close')
+  },
   watch: {
-    zen(to) {
-      this.setZen(to)
+    modal: {
+      handler(to) {
+        this.setModal(to)
+      },
+      immediate: true
     },
-    modal(to) {
-      this.setModal(to)
+    locale: {
+      handler(to) {
+        this.setLocale(to)
+      },
+      immediate: true
     },
-    locale(to) {
-      this.setLocale(to)
+    theme: {
+      handler(to) {
+        this.setTheme(to)
+      },
+      immediate: true
     },
-    theme(to) {
-      this.setTheme(to)
+    zen: {
+      handler(to) {
+        this.setZen(to)
+      },
+      immediate: true
     },
-    '$route.meta.layout'(to) {
-      this.setLayout(to)
+    '$route.meta.layout': {
+      handler(to) {
+        this.setLayout(to)
+      },
+      immediate: true
     }
   }
 }

@@ -11,7 +11,7 @@
 
     <player-error v-if="emptyWithError" :error="error" />
 
-    <div :class="[ 'player__bar', { 'player__bar--zen': zenMode } ]" @contextmenu.prevent>
+    <div :class="[ 'player__bar' ]" @contextmenu.prevent>
       <bar-progressbar :disabled="!currentFile" :progressBar="progressBar" @skipAhead="skipAhead" />
 
       <bar-buttons>
@@ -100,7 +100,7 @@ export default {
 
       options: {
         preload: 'auto',
-        controls: false,
+        controls: true,
         poster: false,
         autoplay: false,
         delay: 500,
@@ -112,22 +112,22 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('player/fetch', { type: 'videos', params: this.params })
+    this.refresh()
 
     // Pip events
     navigator.mediaSession.setActionHandler('previoustrack', this.moveBackward)
     navigator.mediaSession.setActionHandler('nexttrack', this.moveForward)
 
     // Восстанавливаем уровень громкости
-    this.volume = this.$storage.getItem('volume')           || this.default.volume
-    this.muted = JSON.parse(this.$storage.getItem('muted')) || this.default.muted
+    this.volume = JSON.parse(this.$storage.getItem('volume')) || this.default.volume
+    this.muted = JSON.parse(this.$storage.getItem('muted'))   || this.default.muted
 
     // Фокусируемся на плеене чтобы работали эвент хендлеры
     this.$player.focus()
     // И после закрытия модалки тоже
-    this.$modals.on('close', _ => this.$player.focus())
-
-    //window.addEventListener('contextmenu', e => e.preventDefault())
+    this.$modals.on('close', _ => {
+      this.$player && this.$player.focus()
+    })
   },
   computed: {
     $video() {
@@ -190,8 +190,6 @@ export default {
     },
     ...mapState({
       'appTitle': state => state.app.title,
-      'appMode': state => state.app.mode,
-      'theme': state => state.app.theme,
     }),
     ...mapState('player', [
       'sources',
@@ -461,6 +459,7 @@ export default {
         'event_label': 'moveBackward'
       })
     },
+
     moveForward() {
       this.$store.dispatch('player/moveForward')
 
@@ -469,6 +468,7 @@ export default {
         'event_label': 'moveForward'
       })
     },
+
     changeCurrentIndex(index) {
       this.$store.dispatch('player/changeCurrentIndex', index)
 
@@ -478,9 +478,6 @@ export default {
       })
     },
 
-    /**
-     * Ебать
-     */
     skipAhead(time) {
       this.$video.currentTime = time
     },
@@ -526,6 +523,7 @@ export default {
         'event_label': 'setPlaybackRate'
       })
     },
+
     increasePlaybackRate() {
       let speed = this.playbackRate + 0.25
       if (speed > 2) speed = 2
@@ -536,6 +534,7 @@ export default {
         'event_label': 'increasePlaybackRate'
       })
     },
+
     decreasePlaybackRate() {
       let speed = this.playbackRate - 0.25
       if (speed < 0.25) speed = 0.25
@@ -546,6 +545,7 @@ export default {
         'event_label': 'decreasePlaybackRate'
       })
     },
+
     resetPlaybackRate() {
       this.playbackRate = 1
     },
@@ -632,6 +632,7 @@ export default {
         'event_label': 'toggleTheme'
       })
     },
+
     toggleZenMode() {
       this.$store.dispatch('player/toggleZen')
 
@@ -733,9 +734,7 @@ export default {
     },
 
     openKeybindingsModal() {
-      this.$modals.show(KeybindingsModal, {
-        mode: 'video'
-      })
+      this.$modals.show(KeybindingsModal)
       this.$video.pause()
       this.$popover.close()
 
@@ -812,10 +811,21 @@ export default {
     },
 
     refresh() {
-      this.$store.dispatch('player/fetch', { type: 'videos', params: this.params })
+      return this.$store.dispatch('player/fetch', { params: this.params })
     }
   },
   watch: {
+    'params.board'() {
+      this.$store.dispatch('player/reset')
+      this.needUpdate = true
+    },
+    'params.thread'() {
+      this.$store.dispatch('player/reset')
+      this.needUpdate = true
+    },
+    'params.page'() {
+      this.needUpdate = true
+    },
     'params': {
       handler(to) {
         let _result = ''
@@ -824,31 +834,14 @@ export default {
         document.title = `${this.appTitle} - ${_result}`
 
         if (this.needUpdate)
-          this.$store.dispatch('player/fetch', { type: 'videos', params: this.params })
+          this.refresh()
           .then(_ => this.needUpdate = false)
       },
       immediate: true
     },
-    'params.board'() {
-      this.$store.commit('player/SET_CURRENT_INDEX', 0)
-      this.$store.commit('player/SET_CURRENT_PAGE', 1)
-      this.$store.commit('player/RESET_SOURCES')
-
-      this.needUpdate = true
-    },
-    'params.thread'() {
-      this.$store.commit('player/SET_CURRENT_INDEX', 0)
-      this.$store.commit('player/SET_CURRENT_PAGE', 1)
-      this.$store.commit('player/RESET_SOURCES')
-
-      this.needUpdate = true
-    },
-    'params.page'() {
-      this.needUpdate = true
-    },
-
+    
     // При смене индекса
-    currentIndex() { 
+    currentIndex(to) { 
       // Сбраываем прогрессбар
       this.resetProgressBar()
 
@@ -864,7 +857,6 @@ export default {
 
       // Подгружаем видео
       this.$video.load()
-
       // Прячем всплывашку
       this.$popover.close()
     },
@@ -877,20 +869,11 @@ export default {
       this.$storage.setItem('muted', this.$video.muted = to)
     },
 
-    $route(to) {
+    async $route(to) {
+      // Подгружаем видео
+      this.$video.load()
       // Фокусируемся на плеере чтобы работали эвент хендлеры
       this.$player.focus()
-      // Закрываем все модальные окна
-      this.$modals.close()
-      // Прячем всплывашку
-      this.$popover.close()
-      
-      // Waterfall
-      if (to.name == 'player-board-waterfall') {
-        this.isWaterfall = true
-      } else {
-        this.isWaterfall = false
-      }
     }
   }
 }

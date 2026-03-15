@@ -40,7 +40,7 @@ export default new class {
   install(app, options = {}) {
 		this.options = { ...this.options, ...options }
 
-    app.use(router)
+    app.use(router, app)
     app.use(directives)
     app.use(filters)
     app.use(store)

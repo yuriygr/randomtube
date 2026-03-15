@@ -2,7 +2,7 @@
   <modal size="small" class="filters-modal">
     <modal-header :title="$t('modals.filters')">
       <template #after>
-        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
+        <n-button icon_before="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
     {{ data }}

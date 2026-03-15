@@ -2,7 +2,7 @@
   <modal size="small">
     <modal-header :title="$t('modals.report_entry')">
       <template #after>
-        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
+        <n-button icon_before="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
 
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { Modal, ModalHeader, ModalChecklist, NButton, IconButton } from '@vue-norma/ui'
+import { Modal, ModalHeader, ModalChecklist, NButton } from '@vue-norma/ui'
 
 export default {
   name: 'report-item-modal',
-  components: { Modal, ModalHeader, ModalChecklist, NButton, IconButton },
+  components: { Modal, ModalHeader, ModalChecklist, NButton },
   props: [ 'data' ],
   data() {
     return {

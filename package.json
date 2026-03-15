@@ -1,25 +1,24 @@
 {
   "name": "vue3-randomtube",
-  "version": "1.0.5",
+  "version": "1.0.10",
   "private": true,
   "scripts": {
     "serve-tube": "vue-cli-service serve --mode tube.local",
-    "serve-picture": "vue-cli-service serve --mode picture",
-    "build-tube": "vue-cli-service build --mode tube.prod",
-    "build-picture": "vue-cli-service build --mode picture"
+    "serve-picture": "vue-cli-service serve --mode picture.local",
+    "build-tube": "vue-cli-service build --mode tube.prod --dest dist/tube",
+    "build-picture": "vue-cli-service build --mode picture.prod --dest dist/picture"
   },
   "dependencies": {
-    "@sentry/vue": "^7.57.0",
-    "@vue-norma/ui": "^2.4.4",
-    "axios": "^1.4.0",
-    "core-js": "^3.8.3",
+    "@vue-norma/ui": "^2.5.54",
+    "axios": "^1.7.2",
+    "core-js": "^3.37.1",
     "localforage": "^1.10.0",
-    "mitt": "^3.0.0",
+    "mitt": "^3.0.1",
     "register-service-worker": "^1.7.2",
     "vue": "^3.2.13",
     "vue-gtag": "^2.0.1",
-    "vue-i18n": "^9.2.2",
-    "vue-router": "^4.0.3",
+    "vue-i18n": "^9.13.1",
+    "vue-router": "^4.4.0",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
@@ -27,8 +26,8 @@
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "compression-webpack-plugin": "^11.0.0",
-    "sass": "^1.32.7",
-    "sass-loader": "^12.0.0"
+    "compression-webpack-plugin": "^11.1.0",
+    "sass": "^1.77.8",
+    "sass-loader": "^12.6.0"
   }
 }

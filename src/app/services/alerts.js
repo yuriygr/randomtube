@@ -5,7 +5,7 @@ import mitt from 'mitt';
  * Потому что мне так удобно.
  * 
  * @author Боженька <god@heaven>
- * @version 1.0.3
+ * @version 1.0.4
  */
 export default new class {
   options = {
@@ -33,6 +33,10 @@ export default new class {
 
   danger(payload) {
     this.add({ ...payload, type: 'danger' })
+  }
+
+  close() {
+    this.bus.emit('alerts:close')
   }
 
   add(payload) {

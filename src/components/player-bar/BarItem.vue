@@ -28,3 +28,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.bar-item {
+  &.donate {
+    background-image: linear-gradient(50deg, #fb8c2b, #fbaf2b);
+
+    &:hover {
+      background-image: linear-gradient(50deg, #dc761d, #db961d);
+    }
+  }
+}
+</style>

@@ -22,11 +22,11 @@ export default {
     init({ dispatch }) {
       dispatch('fetch')
     },
-    fetch({ commit }, type = 'Video') {
+    fetch({ commit, rootState }) {
       commit('SET_ERROR', false)
       commit('SET_LOADING', true)
 
-      return this.$api.get('entries/boards', { type })
+      return this.$api.get('entries/boards', { type: rootState.app.mode })
       .then(data => {
         commit('SET_DATA', data)
       })

@@ -16,7 +16,8 @@ module.exports = defineConfig({
       minRatio: 0.8
     }]),
     config.plugin('DefinePlugin').use(DefinePlugin, [{
-      'process.env.PACKAGE_VERSION': JSON.stringify(packageJson.version)
+      'process.env.PACKAGE_VERSION': JSON.stringify(packageJson.version),
+      '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': JSON.stringify(false)
     }])
   },
   transpileDependencies: true,

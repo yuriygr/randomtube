@@ -10,9 +10,13 @@
   "header": {
     "nav": {
       "switch": "Switch",
+      "likes": "Likes",
       "donate": "Donate",
       "support": "Support"
     }
+  },
+  "likes": {
+    "title": "Likes"
   },
   "boards": {
     "b": "Random",
@@ -31,7 +35,9 @@
     "media": "Animation",
     "fag": "Faggotria",
     "ne": "Animals",
-    "keira": "Keira Knightley"
+    "dev": "Dev",
+    "gg": "Good girls",
+    "sex": "Sex and relationships"
   },
   "player": {
     "playlist": {
@@ -71,7 +77,10 @@
     }
   },
   "modals": {
-    "boards": "Boards",
+    "boards": {
+      "title": "Boards",
+      "search-placeholder": "Type board name..."
+    },
     "filters": "Filters",
     "report_entry": "Report",
     "keybindings": "Key bindings"
@@ -119,6 +128,16 @@
     }
   },
   "errors": {
+    "todo": {
+      "icon": "ghost-line",
+      "title": "Under development",
+      "description": "This feature is not yet available and is under development. "
+    },
+    "method_not_allowed": {
+      "icon": "cloud-off-line",
+      "title": "Method not available",
+      "description": "Perhaps the developers made a mistake and it shouldn't be like this"
+    },
     "unauthorized": {
       "icon": "spy-line",
       "title": "Unauthorized",

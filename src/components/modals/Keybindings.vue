@@ -2,7 +2,7 @@
   <modal size="small" class="keybindings-modal">
     <modal-header :title="$t('modals.keybindings')">
       <template #after>
-        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
+        <n-button icon_before="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
 
@@ -19,11 +19,13 @@
 </template>
 
 <script>
-import { Modal, ModalHeader, ModalPlaceholder, IconButton } from '@vue-norma/ui'
+import { mapState } from 'vuex'
+
+import { Modal, ModalHeader, Placeholder, NButton } from '@vue-norma/ui'
 
 export default {
   name: 'keybindings-modal',
-  components: { Modal, ModalHeader, ModalPlaceholder, IconButton },
+  components: { Modal, ModalHeader, Placeholder, NButton },
   props: [ 'mode' ],
   methods: {
     closeModal() {
@@ -31,10 +33,13 @@ export default {
     }
   },
   computed: {
+    ...mapState('app', {
+      'appMode': state => state.mode
+    }),
     items() {
       let keys = {}
 
-      keys['image'] =  [
+      keys['Image'] =  [
         { key: 'left', label: 'move-backward-image' },
         { key: 'right', label: 'move-forward-image' },
         { key: 'z', label: 'zen-mode' },
@@ -42,7 +47,7 @@ export default {
         { key: 'ctrl + d', label: 'add-site-to-favorite' }
       ]
 
-      keys['video'] =  [
+      keys['Video'] =  [
         { key: 'left', label: 'move-backward-video' },
         { key: 'right', label: 'move-forward-video' },
         { key: 'top', label: 'volume-up' },
@@ -58,7 +63,7 @@ export default {
         { key: 'shift + down', label: 'decrease-playback-rate' },
       ]
 
-      return keys[this.mode]
+      return keys[this.appMode]
     }
   }
 }

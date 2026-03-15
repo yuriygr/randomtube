@@ -6,7 +6,7 @@
         <page-search />
         <template v-if="!loading && !error">
           <template v-if="emptyQuery">
-            <page-placeholder :text="$t('search.empty_query')" />
+            <placeholder :text="$t('search.empty_query')" />
           </template>
 
           <template v-if="data.length > 0">
@@ -16,13 +16,13 @@
           </template>
 
           <template v-if="data.length == 0">
-            <page-placeholder :text="$t('search.not_found')" />
+            <placeholder :text="$t('search.not_found')" />
           </template>
         </template>
 
-        <page-loading v-if="loading" />
+        <placeholder-loading v-if="loading" />
 
-        <page-placeholder v-if="error"
+        <placeholder v-if="error"
           :icon="$t(humanizeError.icon)"
           :header="$t(humanizeError.title)"
           :text="$t(humanizeError.description)"
@@ -38,12 +38,12 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import { PageSearch, PagePlaceholder, Icon } from '@vue-norma/ui'
+import { PageSearch, Placeholder, PlaceholderLoading, Icon } from '@vue-norma/ui'
 
 export default {
   name: 'search',
   components: {
-    PageSearch, PagePlaceholder, Icon
+    PageSearch, Placeholder, PlaceholderLoading, Icon
   },
   computed: {
     ...mapState('search', {

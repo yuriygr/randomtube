@@ -49,11 +49,11 @@ export default {
     }
   },
   actions: {
-    fetch({ commit }, payload = {}) {
+    fetch({ commit, rootState }, payload = {}) {
       commit('SET_ERROR', false)
       commit('SET_LOADING', true)
 
-      this.$api.get(`entries/${payload.type}`, payload.params)
+      this.$api.get(`entries/${rootState.app.mode.toLowerCase() + 's'}`, payload.params)
       .then(result => {
         commit('SET_SOURCES', result)
       })
@@ -106,6 +106,12 @@ export default {
 
     toggleZen({ commit, state }) {
       commit('SET_ZEN', !state.zen)
+    },
+
+    reset({ commit }) {
+      commit('SET_CURRENT_INDEX', 0)
+      commit('SET_CURRENT_PAGE', 1)
+      commit('RESET_SOURCES')
     }
   },
   getters: {

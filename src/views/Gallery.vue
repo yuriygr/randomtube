@@ -12,7 +12,7 @@
 
     <player-error v-if="emptyWithError" :error="error" />
 
-    <div :class="[ 'player__bar', { 'player__bar--zen': zenMode } ]" @contextmenu="$event.preventDefault()">
+    <div :class="[ 'player__bar' ]" @contextmenu="$event.preventDefault()">
       <bar-buttons>
         <bar-item icon="skip-back" :title="$t('player.bar.move-backward')" :disabled="!canPlayPrev" @click.exact="moveBackward" />
         <bar-item icon="skip-forward" :title="$t('player.bar.move-forward')" :disabled="!canPlayNext" @click.exact="moveForward" />
@@ -66,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('player/fetch', { type: 'images', params: this.params })
+    this.refresh()
 
     // Фокусируемся на плеене чтобы работали эвент хендлеры
     this.$image.focus()
@@ -384,9 +384,7 @@ export default {
     },
 
     openKeybindingsModal() {
-      this.$modals.show(KeybindingsModal, {
-        mode: 'image'
-      })
+      this.$modals.show(KeybindingsModal)
       this.$popover.close()
 
       this.$gtag.event('player', {
@@ -436,10 +434,21 @@ export default {
     },
 
     refresh() {
-      this.$store.dispatch('player/fetch', { type: 'images', params: this.params })
+      return this.$store.dispatch('player/fetch', { params: this.params })
     }
   },
   watch: {
+    'params.board'() {
+      this.$store.dispatch('player/reset')
+      this.needUpdate = true
+    },
+    'params.thread'() {
+      this.$store.dispatch('player/reset')
+      this.needUpdate = true
+    },
+    'params.page'() {
+      this.needUpdate = true
+    },
     'params': {
       handler(to) {
         let _result = ''
@@ -448,27 +457,10 @@ export default {
         document.title = `${this.appTitle} - ${_result}`
 
         if (this.needUpdate)
-          this.$store.dispatch('player/fetch', { type: 'images', params: this.params })
+          this.refresh()
           .then(_ => this.needUpdate = false)
       },
       immediate: true
-    },
-    'params.board'() {
-      this.$store.commit('player/SET_CURRENT_INDEX', 0)
-      this.$store.commit('player/SET_CURRENT_PAGE', 1)
-      this.$store.commit('player/RESET_SOURCES')
-
-      this.needUpdate = true
-    },
-    'params.thread'() {
-      this.$store.commit('player/SET_CURRENT_INDEX', 0)
-      this.$store.commit('player/SET_CURRENT_PAGE', 1)
-      this.$store.commit('player/RESET_SOURCES')
-
-      this.needUpdate = true
-    },
-    'params.page'() {
-      this.needUpdate = true
     },
 
     // При смене индекса
@@ -487,10 +479,6 @@ export default {
     $route(to) {
       // Фокусируемся на плеере чтобы работали эвент хендлеры
       this.$player.focus()
-      // Закрываем все модальные окна
-      this.$modals.close()
-      // Прячем всплывашку
-      this.$popover.close()
     }
   }
 }

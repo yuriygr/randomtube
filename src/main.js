@@ -8,6 +8,7 @@ import App from '@/App.vue'
 import Norma from '@/app/index.js'
 
 // some styles
+import '@vue-norma/ui/styles'
 import '@/assets/scss/main.scss'
 
 createApp(App)

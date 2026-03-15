@@ -1,9 +1,9 @@
 <template>
   <modal class="board-switch">
-    <modal-header :title="$t('modals.boards')">
+    <modal-header :title="$t('modals.boards.title')">
       <template #after>
-        <icon-button name="search-line" mode="tertiary" @click.exact="toggleSearch" :title="$t('actions.search')" />
-        <icon-button name="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
+        <n-button icon_before="search-line" mode="tertiary" @click.exact="toggleSearch" :title="$t('actions.search')" />
+        <n-button icon_before="close-circle-line" mode="tertiary" @click.exact="closeModal" :title="$t('actions.close')" />
       </template>
     </modal-header>
 
@@ -12,7 +12,7 @@
         <div class="search__icon">
           <icon name="search-line" width="16" height="16" />
         </div>
-        <input v-model="searchQuery" ref="input" class="search__input" :placeholder="$t('modals.search')"/>
+        <input v-model="searchQuery" ref="input" class="search__input" :placeholder="$t('modals.boards.search-placeholder')"/>
       </div>
     </div>
 
@@ -20,28 +20,25 @@
       <template v-for="(item, index) in filteredBoards" :key="'bsi-' + index">
         <router-link class="board-switch__item" :to="item.link" exact-active-class="" active-class="board-switch__item--active">
           <span class="board">/{{ item.board }}/ - {{ item.name }}</span>
-          <span class="count">{{ item.count }} видео</span>
+          <span class="count">{{ $tc(`modals.boards.count.${appMode}`, item.count)  }}</span>
         </router-link>
       </template>
     </div>
 
     <template v-if="!error && !loading">
       <template v-if="filteredBoards.length == 0">
-        <modal-placeholder v-if="searching"
+        <placeholder v-if="searching"
           :text="$t('error.not_found')"
         />
 
-        <modal-placeholder v-if="!searching"
+        <placeholder v-if="!searching"
           :text="$t('error.empty_data')"
         />
       </template>
     </template>
 
-    <modal-placeholder v-if="loading && filteredBoards.length == 0"
-      :text="$t('modals.loading')"
-    />
-
-    <modal-placeholder v-if="error"
+    <placeholder-loading v-if="loading && filteredBoards.length == 0" />
+    <placeholder v-if="error"
       :icon="$t(humanizeError.icon)"
       :header="$t(humanizeError.title)"
       :text="$t(humanizeError.description)"
@@ -55,11 +52,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import { Modal, ModalHeader, ModalPlaceholder, NButton, Icon, IconButton } from '@vue-norma/ui'
+import { Modal, ModalHeader, Placeholder, PlaceholderLoading, NButton, Icon } from '@vue-norma/ui'
 
 export default {
   name: 'board-switch-modal',
-  components: { Modal, ModalHeader, ModalPlaceholder, NButton,  Icon, IconButton },
+  components: { Modal, ModalHeader, Placeholder, PlaceholderLoading, NButton, Icon },
   data() {
     return {
       searchQuery: '',
@@ -71,6 +68,9 @@ export default {
       'data': state => state.data,
       'loading': state => state.loading,
       'error': state => state.error
+    }),
+    ...mapState('app', {
+      'appMode': state => state.mode
     }),
     $input() {
       return this.$refs.input

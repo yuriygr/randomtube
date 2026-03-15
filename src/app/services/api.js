@@ -40,7 +40,7 @@ export default new class {
 						authorization: `Bearer ${this.token}`,
 					}
 				}
-		
+
 				return config;
 			},
 			(error) => Promise.reject(error)
@@ -61,18 +61,19 @@ export default new class {
 
 	// Преобразует ошибочный ответ в что-то более приятное моему глазу
 	handleResponseError(error) {
-		let hasResponse = error.response != undefined
-
+		// Сетевая ошибка — нет ответа от сервера
+		if (!error.response) {
+			return Promise.reject({
+				code: error.code,
+				status: error.code ?? 'network_error'
+			})
+		}
+	
+		const response = error.response.data
+	
 		return Promise.reject({
-			code: hasResponse
-						? error.response.data.code || error.response.code
-						: 0,
-			status: hasResponse
-							? error.response.data.status || error.response.statusText
-							: error.message,
-			message: hasResponse
-							? error.response.data.error
-							: error
+			code: response.code,
+			status: response.error || response.status
 		})
 	}
 
@@ -86,10 +87,7 @@ export default new class {
       formData.append(item, params[item])
     })
 
-    let headers = {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    }
-    return [formData, headers]
+    return formData
   }
 
   /**
@@ -110,12 +108,30 @@ export default new class {
     return new URLSearchParams(_params).toString()
   }
 
-	get(path, params = {}) {
-		return this.instance.get(path, { params })
+	get(path, params = {}, signal = false) {
+		return this.instance.get(path, { params, signal })
 	}
 
   post(path, params = {}) {
-    let [formData, headers] = this.preparePostData(params)
-    return this.instance.post(path, formData, headers)
+    let formData = this.preparePostData(params)
+    return this.instance.post(path, formData, {
+      headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		})
   }
+
+	upload(path, formdata, opt) {
+		return this.instance.post(path, formdata, opt)
+	}
+
+  postJSON(path, json = {}, headers = {}) {
+    return this.instance.post(path, json, {
+			headers
+		})
+	}
+
+	delete(path, params = {}) {
+		return this.instance.delete(path, { params })
+	}
 } 

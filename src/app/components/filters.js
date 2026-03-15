@@ -3,7 +3,7 @@ const humanizeError = (error) => {
     return string.replace(/\W+/g, " ")
       .split(/ |\B(?=[A-Z])/)
       .map(word => word.toLowerCase())
-      .join('_');
+      .join('');
   }
 
   let _code = snakeCase(error.status)
